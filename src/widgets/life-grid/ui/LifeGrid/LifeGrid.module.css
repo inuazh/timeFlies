@@ -1,0 +1,135 @@
+.container {
+  padding: 20px;
+  overflow: visible;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.monthRow {
+  display: grid;
+  grid-template-columns: 28px repeat(52, 1fr);
+  gap: 1px;
+  margin-bottom: 4px;
+}
+
+.monthSpacer {
+  /* empty first column for alignment with year labels */
+}
+
+.monthLabel {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 28px repeat(52, 1fr);
+  gap: 1px;
+}
+
+.yearLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Context menu */
+
+.contextOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+}
+
+.contextMenu {
+  position: fixed;
+  z-index: 151;
+  padding: 6px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: fadeIn 0.1s ease;
+}
+
+.contextItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.contextItem:hover {
+  background: rgba(255, 74, 106, 0.15);
+  color: var(--danger);
+}
+
+.contextDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.contextTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .row,
+  .monthRow {
+    grid-template-columns: 20px repeat(52, 1fr);
+  }
+
+  .yearLabel {
+    font-size: 0.5rem;
+    padding-right: 3px;
+  }
+
+  .monthLabel {
+    font-size: 0.45rem;
+  }
+}

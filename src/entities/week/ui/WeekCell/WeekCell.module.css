@@ -1,0 +1,92 @@
+.cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 1.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.cell:hover {
+  transform: scale(1.9);
+  z-index: 10;
+  position: relative;
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 1px;
+}
+
+.lived {
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+
+.lived:hover {
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+.current {
+  background: var(--accent-green);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+}
+
+.current:hover {
+  animation: none;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.8);
+}
+
+.future {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.future:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.goalRange {
+  opacity: 0.45;
+  border-radius: 2px;
+}
+
+.goalRange:hover {
+  opacity: 0.8;
+}
+
+.goalTarget {
+  position: relative;
+  background: var(--goal-color, #b44aff);
+  opacity: 1;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--goal-color, #b44aff) 60%, transparent);
+}
+
+.goalTarget::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.goalTarget:hover {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--goal-color, #b44aff) 80%, transparent);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    box-shadow: 0 0 6px rgba(0, 255, 136, 0.3);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.7);
+  }
+}
