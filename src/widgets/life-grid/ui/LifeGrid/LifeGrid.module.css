@@ -124,17 +124,13 @@
   }
 
   .gridScroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -10px;
-    padding: 0 10px;
-    padding-bottom: 6px;
+    overflow-x: visible;
   }
 
   .monthRow,
   .row {
     grid-template-columns: 22px repeat(52, minmax(7px, 1fr));
-    min-width: 480px;
+    min-width: 520px;
   }
 
   .yearLabel {
@@ -144,5 +140,17 @@
 
   .monthLabel {
     font-size: 0.48rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .gridScroll {
+    zoom: 0.61;
+  }
+}
+
+@media (max-width: 380px) {
+  .gridScroll {
+    zoom: 0.51;
   }
 }

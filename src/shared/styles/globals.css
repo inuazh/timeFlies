@@ -172,6 +172,7 @@ button {
     display: flex !important;
     flex-direction: column !important;
     min-height: 0 !important;
+    zoom: 1 !important;
   }
 
   /* Сетка заполняет оставшееся пространство */
