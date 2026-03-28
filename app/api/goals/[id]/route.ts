@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { verifyToken, AUTH_COOKIE_NAME } from "@/shared/lib/auth";
 import { db } from "@/shared/lib/db";
 
+export const dynamic = "force-dynamic";
+
 interface GoalRow {
   id: number;
   user_id: number;

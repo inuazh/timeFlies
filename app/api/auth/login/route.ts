@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { db } from "@/shared/lib/db";
 import { createToken, AUTH_COOKIE_NAME, COOKIE_OPTIONS } from "@/shared/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 interface LoginBody {
   email: string;
   password: string;
