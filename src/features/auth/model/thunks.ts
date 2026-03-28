@@ -58,11 +58,13 @@ export const checkAuth = createAsyncThunk(
       dispatch(setUser(user));
       return user;
     } catch (err) {
-      // Разлогинивать только при явном 401 — не при сетевых ошибках или таймаутах
       if (err instanceof ApiHttpError && err.status === 401) {
+        // Явный 401 — токен протух или невалиден, разлогиниваем
         dispatch(clearUser());
+        return null;
       }
-      return null;
+      // Сетевая ошибка / сервер спит — пробрасываем чтобы DashboardPage не редиректил
+      throw err;
     } finally {
       dispatch(setUserLoading(false));
     }

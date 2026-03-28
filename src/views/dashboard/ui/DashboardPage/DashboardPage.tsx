@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { checkAuth } from "@/features/auth";
@@ -14,11 +14,17 @@ export function DashboardPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { data: user, isLoading } = useAppSelector((s) => s.user);
+  const [networkError, setNetworkError] = useState(false);
 
   useEffect(() => {
     if (!user) {
+      setNetworkError(false);
       dispatch(checkAuth()).then((result) => {
-        if (result.meta.requestStatus === "rejected" || !result.payload) {
+        if (result.meta.requestStatus === "rejected") {
+          // Сетевая ошибка — сервер спит, не редиректим
+          setNetworkError(true);
+        } else if (!result.payload) {
+          // 401 — токен невалиден, идём на логин
           router.push("/login");
         } else {
           dispatch(fetchGoals());
@@ -28,6 +34,20 @@ export function DashboardPage() {
       dispatch(fetchGoals());
     }
   }, [dispatch, user, router]);
+
+  if (networkError) {
+    return (
+      <div className={styles.page}>
+        <Header />
+        <div className={styles.loading}>
+          Сервер недоступен.{" "}
+          <button onClick={() => setNetworkError(false)}>
+            Попробовать снова
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading || !user) {
     return (
