@@ -207,7 +207,7 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
 
   function handlePrint() {
     if (window.innerWidth <= 600) {
-      alert("Экспорт PDF доступен только на ПК");
+      alert("Экспорт PDF временно доступен только на ПК");
       return;
     }
 
