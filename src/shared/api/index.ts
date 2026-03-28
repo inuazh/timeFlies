@@ -3,6 +3,7 @@ export {
   apiLogin,
   apiLogout,
   apiGetMe,
+  ApiHttpError,
 } from "./auth";
 export type { RegisterData, LoginData, UserResponse, ApiError } from "./auth";
 

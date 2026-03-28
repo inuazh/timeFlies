@@ -22,10 +22,16 @@ export interface ApiError {
   error: string;
 }
 
+export class ApiHttpError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+  }
+}
+
 async function handleResponse<T>(res: Response): Promise<T> {
   const data = await res.json();
   if (!res.ok) {
-    throw new Error((data as ApiError).error || "Произошла ошибка");
+    throw new ApiHttpError(res.status, (data as ApiError).error || "Произошла ошибка");
   }
   return data as T;
 }

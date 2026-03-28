@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setUser, clearUser, setUserLoading, setUserError } from "@/entities/user";
-import { apiRegister, apiLogin, apiLogout, apiGetMe } from "@/shared/api";
+import { apiRegister, apiLogin, apiLogout, apiGetMe, ApiHttpError } from "@/shared/api";
 import type { RegisterData, LoginData } from "@/shared/api";
 
 export const register = createAsyncThunk(
@@ -57,8 +57,11 @@ export const checkAuth = createAsyncThunk(
       const user = await apiGetMe();
       dispatch(setUser(user));
       return user;
-    } catch {
-      dispatch(clearUser());
+    } catch (err) {
+      // Разлогинивать только при явном 401 — не при сетевых ошибках или таймаутах
+      if (err instanceof ApiHttpError && err.status === 401) {
+        dispatch(clearUser());
+      }
       return null;
     } finally {
       dispatch(setUserLoading(false));
