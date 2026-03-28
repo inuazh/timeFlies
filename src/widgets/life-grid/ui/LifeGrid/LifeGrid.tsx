@@ -234,6 +234,7 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
           Экспорт PDF
         </Button>
       </div>
+      <div className={styles.gridScroll} data-grid-scroll>
       <div className={styles.monthRow}>
         <span className={styles.monthSpacer} />
         {Array.from({ length: WEEKS_PER_YEAR }, (_, w) => {
@@ -278,6 +279,7 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
             })}
           </div>
         ))}
+      </div>
       </div>
 
       <WeekTooltip

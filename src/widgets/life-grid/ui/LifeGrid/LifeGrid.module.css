@@ -29,6 +29,10 @@
   line-height: 1;
 }
 
+.gridScroll {
+  width: 100%;
+}
+
 .grid {
   display: flex;
   flex-direction: column;
@@ -116,12 +120,21 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 12px;
+    padding: 10px;
   }
 
-  .row,
-  .monthRow {
-    grid-template-columns: 20px repeat(52, 1fr);
+  .gridScroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -10px;
+    padding: 0 10px;
+    padding-bottom: 6px;
+  }
+
+  .monthRow,
+  .row {
+    grid-template-columns: 22px repeat(52, minmax(7px, 1fr));
+    min-width: 480px;
   }
 
   .yearLabel {
@@ -130,6 +143,6 @@
   }
 
   .monthLabel {
-    font-size: 0.45rem;
+    font-size: 0.48rem;
   }
 }
