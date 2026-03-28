@@ -147,6 +147,10 @@
   .gridScroll {
     zoom: 0.61;
   }
+
+  .toolbar {
+    opacity: 0.5;
+  }
 }
 
 @media (max-width: 380px) {

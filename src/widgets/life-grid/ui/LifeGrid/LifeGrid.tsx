@@ -206,6 +206,11 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
   }
 
   function handlePrint() {
+    if (window.innerWidth <= 600) {
+      alert("Экспорт PDF доступен только на ПК");
+      return;
+    }
+
     const node = gridRef.current;
     if (!node) return;
 
