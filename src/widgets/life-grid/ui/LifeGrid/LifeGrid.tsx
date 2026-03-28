@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { WeekCell } from "@/entities/week";
 import { GOAL_COLORS, type Goal } from "@/entities/goal";
@@ -128,6 +128,7 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
   const goals = useAppSelector((s) => s.goal.items);
   const goalError = useAppSelector((s) => s.goal.error);
 
+  const gridRef = useRef<HTMLDivElement>(null);
   const [tooltipInfo, setTooltipInfo] = useState<WeekInfo | null>(null);
   const [tooltipGoals, setTooltipGoals] = useState<Array<{ title: string; color: string }>>([]);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
@@ -205,11 +206,29 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
   }
 
   function handlePrint() {
+    const node = gridRef.current;
+    if (!node) return;
+
+    const clone = node.cloneNode(true) as HTMLElement;
+    clone.querySelectorAll("[data-print-hide]").forEach((el) => el.remove());
+    clone.querySelectorAll("[role=tooltip]").forEach((el) => el.remove());
+
+    const root = document.createElement("div");
+    root.id = "__printRoot";
+    root.appendChild(clone);
+    document.body.appendChild(root);
+
+    const cleanup = () => {
+      document.body.removeChild(root);
+      window.removeEventListener("afterprint", cleanup);
+    };
+    window.addEventListener("afterprint", cleanup);
+
     window.print();
   }
 
   return (
-    <div className={clsx(glass.card, styles.container)} role="grid" aria-label="Календарь жизни">
+    <div ref={gridRef} className={clsx(glass.card, styles.container)} role="grid" aria-label="Календарь жизни">
       <div className={styles.toolbar} data-print-hide>
         <Button variant="ghost" onClick={handlePrint} aria-label="Сохранить как PDF">
           Экспорт PDF
@@ -227,7 +246,7 @@ export function LifeGrid({ birthDate }: LifeGridProps) {
         })}
       </div>
 
-      <div className={styles.grid}>
+      <div className={styles.grid} data-life-grid>
         {grid.map((row, y) => (
           <div key={y} className={styles.row} role="row">
             <span className={styles.yearLabel}>
